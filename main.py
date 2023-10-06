@@ -16,8 +16,8 @@ class MyFrame(wx.Frame):
         method2Menu.Append(wx.ID_ANY, "Алгоритм №1")
         method2Menu.Append(wx.ID_ANY, "Алгоритм №2")
 
-        fileMenu.AppendSubMenu(method2Menu, "С постоянным шагом")
         fileMenu.AppendSubMenu(methodMenu, "С переменным шагом")
+        fileMenu.AppendSubMenu(method2Menu, "С постоянным шагом")
         fileMenu.Append(wx.ID_ANY, 'Кратный интеграл')
 
         menubar.Append(fileMenu, "Численное интегрирование")
