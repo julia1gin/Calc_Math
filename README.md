@@ -75,3 +75,32 @@ def parabola(fx, a, b, n):
     return ans*h/3
 
 print(parabola(fx,a,b,n))
+
+
+
+//Метод трапеций// 
+
+from math import *
+
+def trap(a,b,n):
+    
+    def func(x):
+        global formula
+        return eval(formula)
+    
+    h=(b-a)/n
+    s=h*(func(a)+func(b))*0.5
+    x=a+h
+    
+    while (x <= b-h):
+        s=s+h*func(x)
+        x=x+h
+    return s
+
+global formula
+formula=input("Введите подинтегральную функцию: ")
+a=float(input('Введите нижний предел интегрирования: '))
+b=float(input('Введите нверхний предел интегрирования: '))
+n=int(input('Введите количество разбиений'))
+print(trap(a,b,n))
+
