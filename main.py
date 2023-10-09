@@ -6,7 +6,7 @@ class windowIntegral(wx.Frame):
 
         panel = wx.Panel(self)
 
-        fb = wx.FlexGridSizer(5, 2, 15, 15)
+        fb = wx.FlexGridSizer(4, 2, 15, 15)
 
         fb.AddMany([(wx.StaticText(panel, label="Верхний предел интегрирования:")),
                     (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
@@ -14,9 +14,7 @@ class windowIntegral(wx.Frame):
                     (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
                     (wx.StaticText(panel, label="Количество разбиений:")),
                     (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
-                    (wx.StaticText(panel, label="Шаг:")),
-                    (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
-                    (wx.StaticText(panel, label="Точность:")),
+                    (wx.StaticText(panel, label="Подыинтегральная функция:")),
                     (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND)])
 
         panel.SetSizer(fb)
