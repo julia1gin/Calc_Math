@@ -1,26 +1,33 @@
 import wx
-
+import const
 class windowIntegral(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
 
         panel = wx.Panel(self)
 
-        fb = wx.FlexGridSizer(4, 2, 15, 15)
+        fb = wx.FlexGridSizer(5, 2, 15, 15)
+        self.atext = wx.TextCtrl(panel)
+        self.btext = wx.TextCtrl(panel)
+        self.xtext = wx.TextCtrl(panel)
+        self.ntext = wx.TextCtrl(panel)
+        self.result = wx.Button(panel, label="Посчитать")
 
-        fb.AddMany([(wx.StaticText(panel, label="Верхний предел интегрирования:")),
-                    (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
+        fb.AddMany([(wx.StaticText(panel, label="Подыинтегральная функция:")),
+                    self.xtext,
                     (wx.StaticText(panel, label="Нижний предел интегрирования:")),
-                    (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
+                    self.atext,
+                    (wx.StaticText(panel, label="Верхний предел интегрирования:")),
+                    self.btext,
                     (wx.StaticText(panel, label="Количество разбиений:")),
-                    (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND),
-                    (wx.StaticText(panel, label="Подыинтегральная функция:")),
-                    (wx.TextCtrl(panel), wx.ID_ANY, wx.EXPAND)])
-
+                    self.ntext, self.result])
+        self.result.Bind(wx.EVT_BUTTON, self.integrate, None)
         panel.SetSizer(fb)
         self.Centre()
         self.Show()
 
+    def integrate(self, event):
+        print(const.right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
@@ -53,6 +60,7 @@ class MyFrame(wx.Frame):
     def window_Integral(self, event):
         frame2 = windowIntegral(None, "Произведем рассчеты")
         frame2.Centre()
+        frame2.id = event.GetId
         frame2.Show(True)
 
 app = wx.App()
