@@ -1,11 +1,11 @@
 import wx
-import const
+from const import *
 class windowIntegral(wx.Frame):
-    def __init__(self, parent, title):
+    def __init__(self, parent, title, metId):
         super().__init__(parent, title=title)
+        self.id = metId
 
         panel = wx.Panel(self)
-
         fb = wx.FlexGridSizer(5, 2, 15, 15)
         self.atext = wx.TextCtrl(panel)
         self.btext = wx.TextCtrl(panel)
@@ -27,7 +27,11 @@ class windowIntegral(wx.Frame):
         self.Show()
 
     def integrate(self, event):
-        print(const.right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
+        print(self.id)
+        match self.id:
+            case 1: print(left_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
+            case 2: print(right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
+            case 3: print(parabola(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
@@ -49,18 +53,24 @@ class MyFrame(wx.Frame):
         fileMenu.AppendSubMenu(method2Menu, "С постоянным шагом")
         fileMenu.Append(7, 'Кратный интеграл')
 
-        methodMenu.Bind(wx.EVT_MENU, self.window_Integral, None, 1)
-        methodMenu.Bind(wx.EVT_MENU, self.window_Integral, None, 2)
-        methodMenu.Bind(wx.EVT_MENU, self.window_Integral, None, 3)
-        methodMenu.Bind(wx.EVT_MENU, self.window_Integral, None, 4)
+        methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 1)
+        methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 2)
+        methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 3)
+        methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 4)
 
         menubar.Append(fileMenu, "Численное интегрирование")
         self.SetMenuBar(menubar)
 
-    def window_Integral(self, event):
-        frame2 = windowIntegral(None, "Произведем рассчеты")
+    def window_integral(self, event):
+        id = event.GetId()
+        title = ''
+        match id:
+            case 1: title = "Метод левых прямоугольников"
+            case 2: title = "Метод правых прямоугольников"
+            case 3: title = "Метод парабол"
+            case 4: title = "Метод трапеций"
+        frame2 = windowIntegral(None, title, id)
         frame2.Centre()
-        frame2.id = event.GetId
         frame2.Show(True)
 
 app = wx.App()
