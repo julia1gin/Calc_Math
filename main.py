@@ -6,13 +6,13 @@ class windowIntegral(wx.Frame):
         self.id = metId
 
         panel = wx.Panel(self)
-        fb = wx.FlexGridSizer(5, 2, 15, 15)
+        fb = wx.FlexGridSizer(6, 2, 15, 15)
         self.atext = wx.TextCtrl(panel)
         self.btext = wx.TextCtrl(panel)
         self.xtext = wx.TextCtrl(panel)
         self.ntext = wx.TextCtrl(panel)
         self.result = wx.Button(panel, label="Посчитать")
-
+        self.answer = wx.StaticText(panel)
         fb.AddMany([(wx.StaticText(panel, label="Подыинтегральная функция:")),
                     self.xtext,
                     (wx.StaticText(panel, label="Нижний предел интегрирования:")),
@@ -20,18 +20,20 @@ class windowIntegral(wx.Frame):
                     (wx.StaticText(panel, label="Верхний предел интегрирования:")),
                     self.btext,
                     (wx.StaticText(panel, label="Количество разбиений:")),
-                    self.ntext, self.result])
+                    self.ntext, self.result, self.answer,
+                    wx.StaticText(panel)])
         self.result.Bind(wx.EVT_BUTTON, self.integrate, None)
         panel.SetSizer(fb)
         self.Centre()
         self.Show()
 
     def integrate(self, event):
-        print(self.id)
+        ans = ''
         match self.id:
-            case 1: print(left_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
-            case 2: print(right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
-            case 3: print(parabola(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue())))
+            case 1: ans = left_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
+            case 2: ans = right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
+            case 3: ans = parabola(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
+        self.answer.SetLabel(str(ans))
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
