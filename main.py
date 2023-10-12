@@ -1,19 +1,23 @@
 import wx
 from const import *
 from var import *
+
 class windowIntegral(wx.Frame):
     def __init__(self, parent, title, metId):
         super().__init__(parent, title=title)
+
         self.id = metId
         if(metId > 4):
             self.ntype = "Точность:"
         else:
             self.ntype = "Количество разбиений:"
+
         panel = wx.Panel(self)
         fb = wx.FlexGridSizer(6, 2, 15, 15)
+
+        self.xtext = wx.TextCtrl(panel)
         self.atext = wx.TextCtrl(panel)
         self.btext = wx.TextCtrl(panel)
-        self.xtext = wx.TextCtrl(panel)
         self.ntext = wx.TextCtrl(panel)
         self.result = wx.Button(panel, label="Посчитать")
         self.answer = wx.StaticText(panel)
@@ -26,6 +30,7 @@ class windowIntegral(wx.Frame):
                     (wx.StaticText(panel, label=self.ntype)),
                     self.ntext, self.result, self.answer,
                     wx.StaticText(panel)])
+
         self.result.Bind(wx.EVT_BUTTON, self.integrate, None)
         panel.SetSizer(fb)
         self.Centre()
@@ -41,6 +46,7 @@ class windowIntegral(wx.Frame):
             case 5: ans = double_int(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
             case 6: ans = double_int_fixed(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
         self.answer.SetLabel(str(ans))
+
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
