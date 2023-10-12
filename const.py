@@ -58,15 +58,13 @@ def parabola(fx, a, b, n):
 #Метод трапеций
 
 
-def trap(a, b, n):
-    def func(x):
-        global formula
-        return eval(formula)
+def trap(fx, a, b, n):
+
     h = (b - a) / n
-    s = h * (func(a) + func(b)) * 0.5
+    s = h * (f(fx, a) + f(fx, b)) * 0.5
     x = a + h
 
     while (x <= b - h):
-        s = s + h * func(x)
+        s = s + h * f(fx, x)
         x = x + h
     return s

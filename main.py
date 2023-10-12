@@ -1,10 +1,14 @@
 import wx
 from const import *
+from var import *
 class windowIntegral(wx.Frame):
     def __init__(self, parent, title, metId):
         super().__init__(parent, title=title)
         self.id = metId
-
+        if(metId > 4):
+            self.ntype = "Точность:"
+        else:
+            self.ntype = "Количество разбиений:"
         panel = wx.Panel(self)
         fb = wx.FlexGridSizer(6, 2, 15, 15)
         self.atext = wx.TextCtrl(panel)
@@ -19,7 +23,7 @@ class windowIntegral(wx.Frame):
                     self.atext,
                     (wx.StaticText(panel, label="Верхний предел интегрирования:")),
                     self.btext,
-                    (wx.StaticText(panel, label="Количество разбиений:")),
+                    (wx.StaticText(panel, label=self.ntype)),
                     self.ntext, self.result, self.answer,
                     wx.StaticText(panel)])
         self.result.Bind(wx.EVT_BUTTON, self.integrate, None)
@@ -33,6 +37,9 @@ class windowIntegral(wx.Frame):
             case 1: ans = left_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
             case 2: ans = right_rectangle(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
             case 3: ans = parabola(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
+            case 4: ans = trap(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), int(self.ntext.GetValue()))
+            case 5: ans = double_int(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
+            case 6: ans = double_int_fixed(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
         self.answer.SetLabel(str(ans))
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -51,14 +58,16 @@ class MyFrame(wx.Frame):
         method2Menu.Append(5, "Алгоритм №1")
         method2Menu.Append(6, "Алгоритм №2")
 
-        fileMenu.AppendSubMenu(methodMenu, "С переменным шагом")
-        fileMenu.AppendSubMenu(method2Menu, "С постоянным шагом")
+        fileMenu.AppendSubMenu(methodMenu, "С постоянным шагом")
+        fileMenu.AppendSubMenu(method2Menu, "С переменным шагом")
         fileMenu.Append(7, 'Кратный интеграл')
 
         methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 1)
         methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 2)
         methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 3)
         methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 4)
+        method2Menu.Bind(wx.EVT_MENU, self.window_integral, None, 5)
+        method2Menu.Bind(wx.EVT_MENU, self.window_integral, None, 6)
 
         menubar.Append(fileMenu, "Численное интегрирование")
         self.SetMenuBar(menubar)
@@ -71,6 +80,8 @@ class MyFrame(wx.Frame):
             case 2: title = "Метод правых прямоугольников"
             case 3: title = "Метод парабол"
             case 4: title = "Метод трапеций"
+            case 5: title = "Алгоритм №1"
+            case 6: title = "Алгоритм №2"
         frame2 = windowIntegral(None, title, id)
         frame2.Centre()
         frame2.Show(True)
