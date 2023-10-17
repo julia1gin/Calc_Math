@@ -21,7 +21,7 @@ class windowIntegral(wx.Frame):
         self.ntext = wx.TextCtrl(panel)
         self.result = wx.Button(panel, label="Посчитать")
         self.answer = wx.StaticText(panel)
-        fb.AddMany([(wx.StaticText(panel, label="Подыинтегральная функция:")),
+        fb.AddMany([(wx.StaticText(panel, label="Подынтегральная функция:")),
                     self.xtext,
                     (wx.StaticText(panel, label="Нижний предел интегрирования:")),
                     self.atext,
