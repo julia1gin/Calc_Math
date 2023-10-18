@@ -1,6 +1,48 @@
 import wx
 from const import *
 from var import *
+from double_integral import *
+
+class windowIntegralDouble(wx.Frame):
+    def __init__(self, parent, title):
+        super().__init__(parent, title=title)
+
+        panel = wx.Panel(self)
+        fb = wx.FlexGridSizer(9, 2, 20, 20)
+
+        self.xtext = wx.TextCtrl(panel)
+        self.atext = wx.TextCtrl(panel)
+        self.btext = wx.TextCtrl(panel)
+        self.ctext = wx.TextCtrl(panel)
+        self.dtext = wx.TextCtrl(panel)
+        self.nxtext = wx.TextCtrl(panel)
+        self.nytext = wx.TextCtrl(panel)
+        self.result = wx.Button(panel, label="Посчитать")
+        self.answer = wx.StaticText(panel)
+        fb.AddMany([(wx.StaticText(panel, label="Подынтегральная функция:")),
+                    self.xtext,
+                    (wx.StaticText(panel, label="Нижний предел интегрирования:")),
+                    self.atext,
+                    (wx.StaticText(panel, label="Верхний предел интегрирования:")),
+                    self.btext,
+                    (wx.StaticText(panel, label="Нижний предел интегрирования:")),
+                    self.ctext,
+                    (wx.StaticText(panel, label="Верхний предел интегрирования:")),
+                    self.dtext,
+                    (wx.StaticText(panel, label="Количество разбиений по х:")),
+                    self.nxtext,
+                    (wx.StaticText(panel, label="Количество разбиений по у:")),
+                    self.nytext,
+                    self.result, self.answer,
+                    wx.StaticText(panel)])
+
+        self.result.Bind(wx.EVT_BUTTON, self.integrateDouble, None)
+        panel.SetSizer(fb)
+        self.Centre()
+        self.Show()
+
+    def integrateDouble(self):
+        pass
 
 class windowIntegral(wx.Frame):
     def __init__(self, parent, title, metId):
@@ -74,6 +116,8 @@ class MyFrame(wx.Frame):
         methodMenu.Bind(wx.EVT_MENU, self.window_integral, None, 4)
         method2Menu.Bind(wx.EVT_MENU, self.window_integral, None, 5)
         method2Menu.Bind(wx.EVT_MENU, self.window_integral, None, 6)
+        fileMenu.Bind(wx.EVT_MENU, self.window_integral_double, None, 7)
+
 
         menubar.Append(fileMenu, "Численное интегрирование")
         self.SetMenuBar(menubar)
@@ -88,9 +132,15 @@ class MyFrame(wx.Frame):
             case 4: title = "Метод трапеций"
             case 5: title = "Алгоритм №1"
             case 6: title = "Алгоритм №2"
+            case 7: title = "Кратный интеграл"
         frame2 = windowIntegral(None, title, id)
         frame2.Centre()
         frame2.Show(True)
+
+    def window_integral_double(self, event):
+        frame3 = windowIntegralDouble(None, title="Кратный интеграл")
+        frame3.Centre()
+        frame3.Show(True)
 
 app = wx.App()
 frame = MyFrame(None, "Вычислительная математика")
