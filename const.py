@@ -35,6 +35,14 @@ def left_rectangle(fx, a, b, n):
         ans = ans + f(fx, x)
         x = x + h
     return ans * h
+
+def left_rectangle_h(fx, a, b, h):
+    x = a
+    ans = 0
+    while (x <= b - h):
+        ans = ans + f(fx, x)
+        x = x + h
+    return ans * h
 # parabola
 
 def f(fx, q):
