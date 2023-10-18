@@ -12,8 +12,8 @@ class windowIntegralDouble(wx.Frame):
 
         self.xtext = wx.TextCtrl(panel)
         self.atext = wx.TextCtrl(panel)
-        self.btext = wx.TextCtrl(panel)
         self.ctext = wx.TextCtrl(panel)
+        self.btext = wx.TextCtrl(panel)
         self.dtext = wx.TextCtrl(panel)
         self.nxtext = wx.TextCtrl(panel)
         self.nytext = wx.TextCtrl(panel)
@@ -21,13 +21,13 @@ class windowIntegralDouble(wx.Frame):
         self.answer = wx.StaticText(panel)
         fb.AddMany([(wx.StaticText(panel, label="Подынтегральная функция:")),
                     self.xtext,
-                    (wx.StaticText(panel, label="Нижний предел интегрирования:")),
+                    (wx.StaticText(panel, label="Нижний предел внешнего интеграла:")),
                     self.atext,
-                    (wx.StaticText(panel, label="Верхний предел интегрирования:")),
-                    self.btext,
-                    (wx.StaticText(panel, label="Нижний предел интегрирования:")),
+                    (wx.StaticText(panel, label="Нижний предел внутреннего интеграла:")),
                     self.ctext,
-                    (wx.StaticText(panel, label="Верхний предел интегрирования:")),
+                    (wx.StaticText(panel, label="Верхний предел внешнего интеграла:")),
+                    self.btext,
+                    (wx.StaticText(panel, label="Верхний предел внутреннего интеграла:")),
                     self.dtext,
                     (wx.StaticText(panel, label="Количество разбиений по х:")),
                     self.nxtext,
@@ -41,8 +41,12 @@ class windowIntegralDouble(wx.Frame):
         self.Centre()
         self.Show()
 
-    def integrateDouble(self):
-        pass
+    def integrateDouble(self, event):
+        ans = integral2(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.ctext.GetValue()),
+                        float(self.btext.GetValue()), float(self.dtext.GetValue()), int(self.nxtext.GetValue()),
+                        int(self.nytext.GetValue()))
+        self.answer.SetLabel(str(ans))
+
 
 class windowIntegral(wx.Frame):
     def __init__(self, parent, title, metId):
@@ -88,6 +92,7 @@ class windowIntegral(wx.Frame):
             case 5: ans = double_int(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
             case 6: ans = double_int_fixed(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
         self.answer.SetLabel(str(ans))
+
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -141,6 +146,7 @@ class MyFrame(wx.Frame):
         frame3 = windowIntegralDouble(None, title="Кратный интеграл")
         frame3.Centre()
         frame3.Show(True)
+
 
 app = wx.App()
 frame = MyFrame(None, "Вычислительная математика")
