@@ -2,7 +2,6 @@
 from math import *
 
 
-x = 0
 
 
 def f(fx, q):
