@@ -1,9 +1,7 @@
 # right_rectangle
 from math import *
 
-
 x = 0
-
 
 def f(fx, q):
     x = q
@@ -19,13 +17,12 @@ def right_rectangle(fx, a, b, n):
         x = x + h
     return ans * h
 
-# left_rectangle
 
+# left_rectangle
 
 def f(fx, q):
     x = q
     return eval(fx)
-
 
 def left_rectangle(fx, a, b, n):
     h = (b - a) / n
@@ -36,6 +33,7 @@ def left_rectangle(fx, a, b, n):
         x = x + h
     return ans * h
 
+
 def left_rectangle_h(fx, a, b, h):
     x = a
     ans = 0
@@ -43,12 +41,13 @@ def left_rectangle_h(fx, a, b, h):
         ans = ans + f(fx, x)
         x = x + h
     return ans * h
+
+
 # parabola
 
 def f(fx, q):
     x = q
     return eval(fx)
-
 
 def parabola(fx, a, b, n):
     ans = f(fx, a) + f(fx, b)
@@ -64,7 +63,6 @@ def parabola(fx, a, b, n):
 
 
 #Метод трапеций
-
 
 def trap(fx, a, b, n):
 
