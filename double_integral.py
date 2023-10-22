@@ -2,7 +2,6 @@ from math import *
 
 
 def integral2(f, a, c, b, d, nx, ny):
-
     def func(fx, q, w):
         x = q
         y = w
