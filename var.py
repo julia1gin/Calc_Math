@@ -1,5 +1,6 @@
 from const import left_rectangle_h
 
+
 def double_int(fx, a, b, ez):
     h = (b-a)/1000
     ans1 = left_rectangle_h(fx, a, b, h)
