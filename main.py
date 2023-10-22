@@ -137,7 +137,6 @@ class MyFrame(wx.Frame):
             case 4: title = "Метод трапеций"
             case 5: title = "Алгоритм №1"
             case 6: title = "Алгоритм №2"
-            case 7: title = "Кратный интеграл"
         frame2 = windowIntegral(None, title, id)
         frame2.Centre()
         frame2.Show(True)
