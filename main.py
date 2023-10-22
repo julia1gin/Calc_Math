@@ -3,6 +3,7 @@ from const import *
 from var import *
 from double_integral import *
 
+
 class windowIntegralDouble(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
