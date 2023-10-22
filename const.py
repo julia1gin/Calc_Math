@@ -62,7 +62,7 @@ def parabola(fx, a, b, n):
     return ans * h / 3
 
 
-#Метод трапеций
+#trap
 
 def trap(fx, a, b, n):
 
