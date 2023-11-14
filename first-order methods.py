@@ -11,8 +11,8 @@ def Euler(f, n = 10, x0 = 0, x_end = 1, y0 = 1):
     y = y0
     while (x <= x_end-h):
         y += h * f(x, y)
-        x += h
         answer[x] = y
+        x += h
     return answer
 
 def f(x, y):
