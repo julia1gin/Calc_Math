@@ -1,30 +1,24 @@
-'''Euler Method for specific function
+'''Euler Method
 
 n - количество итераций, h - шаг, (x, y) - начальная точка, x0 = a, x_end = b '''
 
-import matplotlib.pyplot as plt
+from math import *
+
+def f(fx, q, w):
+    x = q
+    y = w
+    return eval(fx)
 
 answer = {}
-def Euler(f, n = 10, x0 = 0, x_end = 1, y0 = 1):
+def Euler(fx, n, x0, x_end, y0):
     h = (x_end-x0)/n
     x = x0
     y = y0
     while (x <= x_end-h):
-        y += h * f(x, y)
+        y += h * f(fx, x, y)
         answer[x] = y
         x += h
     return answer
 
-def f(x, y):
-    return y * (1 - x) # функция первой производной
-
-Euler_DE = Euler(f)
-x = Euler_DE.keys()
-y = Euler_DE.values()
-
-fig, ax = plt.subplots()
-plt.title('Метод Эйлера для решения дифференциальных уравнений')
-plt.xlabel('x')
-plt.ylabel('y')
-ax.plot(x, y)
-plt.show()
+Euler('y * (1-x)', 10, 0, 1, 1)
+print(answer)
