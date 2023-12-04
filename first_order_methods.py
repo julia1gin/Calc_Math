@@ -15,10 +15,11 @@ def Euler(fx, n, x0, x_end, y0):
     x = x0
     y = y0
     while (x <= x_end-h):
-        y += h * f(fx, x, y)
         answer[x] = y
+        y += h * f(fx, x, y)
         x += h
+    answer[x] = y
     return answer
 
 Euler('y * (1-x)', 10, 0, 1, 1)
-print(answer)
+
