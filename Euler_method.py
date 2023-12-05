@@ -1,7 +1,3 @@
-'''Euler Method
-
-n - количество итераций, h - шаг, (x, y) - начальная точка, x0 = a, x_end = b '''
-
 from math import *
 
 def f(fx, q, w):
@@ -20,6 +16,3 @@ def Euler(fx, n, x0, x_end, y0):
         x += h
     answer[x] = y
     return answer
-
-Euler('y * (1-x)', 10, 0, 1, 1)
-
