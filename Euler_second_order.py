@@ -11,13 +11,5 @@ def euler_second(a, b, h, y, z):
     return ans
 
 
-Euler_DE = euler_second(1, 1.5, 0.1, 0.77, -0.44)
-x = Euler_DE.keys()
-y = Euler_DE.values()
+euler_second(1, 1.5, 0.1, 0.77, -0.44)
 
-fig, ax = plt.subplots()
-plt.title('Метод Эйлера для решения дифференциальных уравнений')
-plt.xlabel('x')
-plt.ylabel('y')
-ax.plot(x, y)
-plt.show()
