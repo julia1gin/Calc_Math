@@ -1,6 +1,4 @@
-from math import *
-import matplotlib.pyplot as plt
-import numpy as np
+
 def f(fx, q, w):
     x = q
     y = w
@@ -21,11 +19,3 @@ def runge_Kutta(fx, a, b, y0, h):
         x += h
     return ans
 
-
-RK = runge_Kutta('y*(1-x)', 0, 1, 1, 0.1)
-x = RK.keys()
-y = RK.values()
-print(RK)
-fig, ax = plt.subplots()
-ax.plot(x, y)
-plt.show()

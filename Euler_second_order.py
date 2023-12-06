@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt
 
-def euler_second(a, b, h, y, z):
+
+def euler_second(a, b, y, z, h):
     x = a
     ans = {}
     ans[x] = y
@@ -11,5 +11,5 @@ def euler_second(a, b, h, y, z):
     return ans
 
 
-euler_second(1, 1.5, 0.1, 0.77, -0.44)
+# Euler_DE = euler_second(1, 1.5, 0.1, 0.77, -0.44)
 

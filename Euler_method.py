@@ -1,4 +1,3 @@
-from math import *
 
 def f(fx, q, w):
     x = q
@@ -6,11 +5,11 @@ def f(fx, q, w):
     return eval(fx)
 
 answer = {}
-def Euler(fx, n, x0, x_end, y0):
-    h = (x_end-x0)/n
+def Euler(fx, x0, b, y0,n):
+    h = (b-x0)/n
     x = x0
     y = y0
-    while (x <= x_end-h):
+    while (x <= b-h):
         answer[x] = y
         y += h * f(fx, x, y)
         x += h
