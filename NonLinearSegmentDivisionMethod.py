@@ -13,4 +13,3 @@ def SegmentDivision(fx, a, b, E):
         else:
             a = x
     return a, b
-
