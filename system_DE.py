@@ -2,7 +2,7 @@ import math
 
 a = 0
 b = 0.3
-h = 0.03
+h = 0.003
 x0 = 2
 y0 = 1
 z0 = 1
@@ -27,3 +27,4 @@ def system_DU(a, b, x0, y0, z0, h):
 
     return result
 
+print(system_DU(a,b, x0,y0,z0,h))
