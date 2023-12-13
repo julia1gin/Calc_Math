@@ -6,6 +6,9 @@ from Euler_method import *
 from RK_integral import *
 from Euler_second_order import *
 from system_DE import *
+from NonLinearSecantMethod import *
+from NonLinearTangentMethod import *
+from NonLinearSegmentDivisionMethod import *
 
 class windowIntegralDouble(wx.Frame):
     def __init__(self, parent, title):
@@ -215,7 +218,75 @@ class systemDU(wx.Frame):
         ans = system_DU( float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.xtext.GetValue()), float(self.ytext.GetValue()), float(self.ztext.GetValue()), float(self.ntext.GetValue()))
         self.answer.SetLabel(str(ans))
 
+class NonLine(wx.Frame):
+    def __init__(self, parent, title, metId):
+        super().__init__(parent, title=title)
 
+        self.id = metId
+
+        panel = wx.Panel(self)
+        fb = wx.FlexGridSizer(7, 2, 20, 20)
+
+        self.xtext = wx.TextCtrl(panel)
+        self.atext = wx.TextCtrl(panel)
+        self.btext = wx.TextCtrl(panel)
+        self.ntext = wx.TextCtrl(panel)
+        self.result = wx.Button(panel, label="Посчитать")
+        self.answer = wx.StaticText(panel)
+        fb.AddMany([(wx.StaticText(panel, label="Уравнение:")),
+                    self.xtext,
+                    (wx.StaticText(panel, label="Начало отрезка:")),
+                    self.atext,
+                    (wx.StaticText(panel, label="Конец отрезка:")),
+                    self.btext,
+                    (wx.StaticText(panel, label="Точность:")), self.ntext, self.result, self.answer,
+                    wx.StaticText(panel)])
+
+        self.result.Bind(wx.EVT_BUTTON, self.nonline, None)
+        panel.SetSizer(fb)
+        self.Centre()
+        self.Show()
+
+    def nonline(self, event):
+        ans = ''
+        match self.id:
+            case 12: ans = SegmentDivision(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
+            case 14: ans = findRootSM(self.xtext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
+        self.answer.SetLabel(str(ans))
+
+class NonLine_Nuton(wx.Frame):
+    def __init__(self, parent, title):
+        super().__init__(parent, title=title)
+
+        panel = wx.Panel(self)
+        fb = wx.FlexGridSizer(8, 2, 13, 15)
+
+        self.xtext = wx.TextCtrl(panel)
+        self.ptext = wx.TextCtrl(panel)
+        self.atext = wx.TextCtrl(panel)
+        self.btext = wx.TextCtrl(panel)
+        self.ntext = wx.TextCtrl(panel)
+        self.result = wx.Button(panel, label="Посчитать")
+        self.answer = wx.StaticText(panel)
+        fb.AddMany([(wx.StaticText(panel, label="Уравнение:")),
+                    self.xtext,
+                    (wx.StaticText(panel, label="Производная:")),
+                    self.ptext,
+                    (wx.StaticText(panel, label="Начало отрезка:")),
+                    self.atext,
+                    (wx.StaticText(panel, label="Конец отрезка:")),
+                    self.btext,
+                    (wx.StaticText(panel, label="Точность:")), self.ntext, self.result, self.answer,
+                    wx.StaticText(panel)])
+
+        self.result.Bind(wx.EVT_BUTTON, self.nonlineNuton, None)
+        panel.SetSizer(fb)
+        self.Centre()
+        self.Show()
+
+    def nonlineNuton(self, event):
+        ans = method_tangent(self.xtext.GetValue(), self.ptext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
+        self.answer.SetLabel(str(ans))
 
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -262,8 +333,21 @@ class MyFrame(wx.Frame):
         difurMenu.Bind(wx.EVT_MENU, self.window_seconddifur, None, 10)
         difurMenu.Bind(wx.EVT_MENU, self.window_systemDU, None, 11)
 
+
+        nonlineMenu = wx.Menu()
+
+        nonlineMenu.Append(12, 'Метод половинного деления')
+        nonlineMenu.Append(13, 'Метод Ньютона(касательных)')
+        nonlineMenu.Append(14, 'Метод хорд')
+
+        nonlineMenu.Bind(wx.EVT_MENU, self.window_nonline, None, 12)
+        nonlineMenu.Bind(wx.EVT_MENU, self.window_nonline_Nuton, None, 13)
+        nonlineMenu.Bind(wx.EVT_MENU, self.window_nonline, None, 14)
+
+
         menubar.Append(fileMenu, "Численное интегрирование")
         menubar.Append(difurMenu, 'Дифференциальные уравнения')
+        menubar.Append(nonlineMenu, 'Нелинейные уравнения')
         self.SetMenuBar(menubar)
 
     def window_integral(self, event):
@@ -306,6 +390,23 @@ class MyFrame(wx.Frame):
         frame6 = systemDU(None, title='Система ДУ')
         frame6.Centre()
         frame6.Show(True)
+
+    def window_nonline(self, event):
+        id = event.GetId()
+        title = ''
+        match id:
+            case 12:
+                title = "Метод половинного деления"
+            case 14:
+                title = "Метод хорд"
+        frame7 = NonLine(None, title, id)
+        frame7.Centre()
+        frame7.Show(True)
+
+    def window_nonline_Nuton(self, event):
+        frame8 = NonLine_Nuton(None, title='Метод Ньютона(касательных)')
+        frame8.Centre()
+        frame8.Show(True)
 
 
 app = wx.App()
