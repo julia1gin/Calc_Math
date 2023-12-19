@@ -9,6 +9,8 @@ from system_DE import *
 from NonLinearSecantMethod import *
 from NonLinearTangentMethod import *
 from NonLinearSegmentDivisionMethod import *
+from iterete_method import *
+from Chebyshev import *
 
 class windowIntegralDouble(wx.Frame):
     def __init__(self, parent, title):
@@ -288,6 +290,68 @@ class NonLine_Nuton(wx.Frame):
         ans = method_tangent(self.xtext.GetValue(), self.ptext.GetValue(), float(self.atext.GetValue()), float(self.btext.GetValue()), float(self.ntext.GetValue()))
         self.answer.SetLabel(str(ans))
 
+class ElemIter(wx.Frame):
+    def __init__(self, parent, title):
+        super().__init__(parent, title=title)
+
+        panel = wx.Panel(self)
+        fb = wx.FlexGridSizer(8, 2, 13, 15)
+
+        self.ftext = wx.TextCtrl(panel)
+        self.xtext = wx.TextCtrl(panel)
+        self.ytext = wx.TextCtrl(panel)
+        self.etext = wx.TextCtrl(panel)
+        self.result = wx.Button(panel, label="Посчитать")
+        self.answer = wx.StaticText(panel)
+        fb.AddMany([(wx.StaticText(panel, label="Уравнение:")),
+                    self.ftext,
+                    (wx.StaticText(panel, label="x")),
+                    self.xtext,
+                    (wx.StaticText(panel, label="y0")),
+                    self.ytext,
+                    (wx.StaticText(panel, label="Точность:")), self.etext, self.result, self.answer,
+                    wx.StaticText(panel)])
+
+        self.result.Bind(wx.EVT_BUTTON, self.ElemIter, None)
+        panel.SetSizer(fb)
+        self.Centre()
+        self.Show()
+
+    def ElemIter(self, event):
+        ans = iterete_method(self.ftext.GetValue(), float(self.xtext.GetValue()), float(self.ytext.GetValue()), float(self.etext.GetValue()))
+        self.answer.SetLabel(str(ans))
+
+class ElemCheb(wx.Frame):
+    def __init__(self, parent, title):
+        super().__init__(parent, title=title)
+
+        panel = wx.Panel(self)
+        fb = wx.FlexGridSizer(8, 2, 13, 15)
+
+        self.xtext = wx.TextCtrl(panel)
+        self.etext = wx.TextCtrl(panel)
+        self.resultsin = wx.Button(panel, label="Посчитать sin(x)")
+        self.resulte = wx.Button(panel, label="Посчитать e**x")
+        self.answer = wx.StaticText(panel)
+        fb.AddMany([(wx.StaticText(panel, label="x")),
+                    self.xtext,
+                    (wx.StaticText(panel, label="Точность:")), self.etext, self.resultsin, self.resulte, self.answer,
+                    wx.StaticText(panel)])
+
+        self.resultsin.Bind(wx.EVT_BUTTON, self.ElemChebSin, None)
+        self.resulte.Bind(wx.EVT_BUTTON,self.ElemChebE,None)
+        panel.SetSizer(fb)
+        self.Centre()
+        self.Show()
+
+    def ElemChebSin(self, event):
+        ans = sin_in_degree_x(float(self.xtext.GetValue()), float(self.etext.GetValue()))
+        self.answer.SetLabel(str(ans))
+    def ElemChebE(self, event):
+        ans = e_in_degree_x(float(self.xtext.GetValue()), float(self.etext.GetValue()))
+        self.answer.SetLabel(str(ans))
+
+
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         super().__init__(parent, title=title)
@@ -344,11 +408,23 @@ class MyFrame(wx.Frame):
         nonlineMenu.Bind(wx.EVT_MENU, self.window_nonline_Nuton, None, 13)
         nonlineMenu.Bind(wx.EVT_MENU, self.window_nonline, None, 14)
 
+        elemMenu = wx.Menu()
+
+        elemMenu.Append(15, 'Метод итераций')
+        elemMenu.Append(16, 'Метод Чебышева')
+
+        elemMenu.Bind(wx.EVT_MENU, self.window_elem_iter, None, 15)
+        elemMenu.Bind(wx.EVT_MENU, self.window_elem_cheb, None, 16)
 
         menubar.Append(fileMenu, "Численное интегрирование")
         menubar.Append(difurMenu, 'Дифференциальные уравнения')
         menubar.Append(nonlineMenu, 'Нелинейные уравнения')
+        menubar.Append(elemMenu, "Вычисление элементарных функций")
+
+
         self.SetMenuBar(menubar)
+
+
 
     def window_integral(self, event):
         id = event.GetId()
@@ -407,6 +483,16 @@ class MyFrame(wx.Frame):
         frame8 = NonLine_Nuton(None, title='Метод Ньютона(касательных)')
         frame8.Centre()
         frame8.Show(True)
+
+    def window_elem_iter(self, event):
+        frame9 = ElemIter(None, title='Метод Итераций')
+        frame9.Centre()
+        frame9.Show(True)
+
+    def window_elem_cheb(self, event):
+        frame10 = ElemCheb(None, title='Метод Чебышева')
+        frame10.Centre()
+        frame10.Show(True)
 
 
 app = wx.App()
