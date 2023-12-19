@@ -15,10 +15,14 @@ def e_in_degree_x(x, accuracy):
 
 def sin_in_degree_x(x, accuracy):
     arr = [1.0000000002, -0.1666666589, 0.008333075, -0.000198107, 0.000002608]
-    c = arr[0]*x
-    p = x
+    c = 0
     k = 0
     u = 100
+    if x == 0:
+        c = 0
+        return c
+    else:
+        p = 1/x
     while abs(u) > accuracy:
         p *= x*x
         u = p*arr[k]
